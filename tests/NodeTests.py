@@ -14,7 +14,7 @@ class TestNodeModule(unittest.TestCase):
         result = Node.evaluate(root_node)
         assert result == 3
 
-    def test_addition_single(self):
+    def test_addition_multiple(self):
         expression = '1+2+3+4'
 
         root_node = Node.construct_ast(expression);
