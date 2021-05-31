@@ -13,6 +13,15 @@ class Node:
         self.value = value
         self.child_nodes = childNodes
 
+    def __str__(self):
+        self.recursive_to_str(indent=0)
+
+    def recursive_to_str(self, indent):
+        print(' ' * indent, end='')
+        print('|' + self.value)
+        for child_node in self.child_nodes:
+            child_node.recursive_to_str(indent + 1)
+
     child_nodes = []
     type = NodeType.ROOT_NODE
     value = ''
