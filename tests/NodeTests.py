@@ -8,8 +8,7 @@ class TestNodeModule(unittest.TestCase):
 
         root_node = Node.construct_ast(expression);
         print(root_node)
-        assert len(root_node.child_nodes) == 1
-        assert len(root_node.child_nodes[0].child_nodes) == 2
+        assert len(root_node.child_nodes) == 2
 
         result = Node.evaluate(root_node)
         assert result == 3
@@ -24,3 +23,13 @@ class TestNodeModule(unittest.TestCase):
 
         result = Node.evaluate(root_node)
         assert result == 10
+
+    def test_multiplication_only(self):
+        expression = '10*1*2*3'
+
+        root_node = Node.construct_ast(expression);
+        print(root_node)
+        assert len(root_node.child_nodes) == 2
+
+        result = Node.evaluate(root_node)
+        assert result == 60

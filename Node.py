@@ -35,20 +35,24 @@ def construct_ast(expression):
 
 def recursive_parse(expression):
     # return list of nodes
-    #start with + as a test
+    operators = ['+', '*'] # BODMAS
+    for operator in operators:
+        sections = expression.split(operator, maxsplit=1)
+        if len(sections) > 1:
+            lhs = recursive_parse(sections[0])
+            rhs = recursive_parse(sections[1])
+            operator_node = Node(NodeType.OPERATOR, operator, [lhs, rhs])
+            return operator_node
+    return Node(NodeType.RAW_VALUE, expression)
 
-    plus_sections = expression.split('+', maxsplit=1)
-    if len(plus_sections) == 1:
-        return Node(NodeType.RAW_VALUE, expression)
 
-    lhs = recursive_parse(plus_sections[0])
-    rhs = recursive_parse(plus_sections[1])
-    plus_node = Node(NodeType.OPERATOR, '+', [lhs, rhs])
-    return plus_node
 
 def evaluate(root_node):
     if root_node.nodeType == NodeType.OPERATOR:
         if root_node.value == '+':
             return evaluate(root_node.child_nodes[0]) + evaluate(root_node.child_nodes[1])
+        elif root_node.value == '*':
+            return evaluate(root_node.child_nodes[0]) * evaluate(root_node.child_nodes[1])
+
     if root_node.nodeType == NodeType.RAW_VALUE:
         return int(root_node.value)
